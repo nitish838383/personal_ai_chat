@@ -335,25 +335,22 @@ async def google_callback(
     # -----------------------------------------------------------------------
 
     async with httpx.AsyncClient(timeout=30.0) as client:
+     profile_response = await client.get(
+        "https://gmail.googleapis.com/gmail/v1/users/me/profile",
+        headers={
+            "Authorization": f"Bearer {access_token}"
+        },
+    )
 
-        userinfo_response = await client.get(
-            "https://www.googleapis.com/oauth2/v2/userinfo",
-            headers={
-                "Authorization": f"Bearer {access_token}"
-            },
-        )
-
-    if userinfo_response.status_code != 200:
+    if profile_response.status_code != 200:
         raise HTTPException(
-            status_code=400,
-            detail="Could not fetch Google account information",
-        )
+        status_code=400,
+        detail="Could not fetch Gmail account information",
+    )
 
-    google_user = userinfo_response.json()
-
-    google_email = google_user.get("email")
-    google_name = google_user.get("name")
-
+    gmail_profile = profile_response.json()
+    google_email = gmail_profile.get("emailAddress")
+    google_name = None
     # -----------------------------------------------------------------------
     # Calculate token expiry
     # -----------------------------------------------------------------------
