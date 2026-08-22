@@ -183,8 +183,11 @@ async def chat(
             .get("content", "I could not generate a response.")
         )
     except Exception as e:
-        assistant_content = f"Sorry, I encountered an error talking to the AI provider: {str(e)[:200]}"
-
+        print(f"AI ERROR: {type(e).__name__}: {e}")
+        raise HTTPException(
+        status_code=500,
+        detail=f"AI provider error: {str(e)[:300]}",
+    )
     # Store assistant message
     assistant_msg = Message(
         conversation_id=conv.id,
