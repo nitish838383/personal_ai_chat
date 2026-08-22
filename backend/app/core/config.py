@@ -33,9 +33,9 @@ class Settings(BaseSettings):
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
     ALGORITHM: str = "HS256"
 
-  # Database
-    DATABASE_URL: str = "postgresql+asyncpg://neondb_owner:npg_HbmXCFD91tvZ@ep-sweet-butterfly-ax9eswwv-pooler.c-4.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
-    DATABASE_URL_SYNC: str = "postgresql://neondb_owner:npg_HbmXCFD91tvZ@ep-sweet-butterfly-ax9eswwv-pooler.c-4.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+ # Database
+    DATABASE_URL: str = "postgresql+asyncpg://postgres:password@localhost:5432/personal_ai_os"
+    DATABASE_URL_SYNC: str = "postgresql://postgres:password@localhost:5432/personal_ai_os"
     # CORS
     CORS_ORIGINS: str = "http://localhost:3000,http://127.0.0.1:3000"
 
