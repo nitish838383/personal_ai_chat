@@ -344,8 +344,12 @@ async def google_callback(
 
     if profile_response.status_code != 200:
         raise HTTPException(
-        status_code=400,
-        detail="Could not fetch Gmail account information",
+        status_code=profile_response.status_code,
+        detail={
+            "message": "Could not fetch Gmail account information",
+            "google_status": profile_response.status_code,
+            "google_response": profile_response.text,
+        },
     )
 
     gmail_profile = profile_response.json()
