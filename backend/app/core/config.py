@@ -37,7 +37,7 @@ class Settings(BaseSettings):
     DATABASE_URL: str = "postgresql+asyncpg://postgres:password@localhost:5432/personal_ai_os"
     DATABASE_URL_SYNC: str = "postgresql://postgres:password@localhost:5432/personal_ai_os"
     # CORS
-    CORS_ORIGINS: str = "https://nexai-ai-nine-rho.vercel.app,http://localhost:3000,http://127.0.0.1:3000,http://localhost:5173"
+    CORS_ORIGINS: str = "https://nexora-ai-ustadji.vercel.app,https://nexai-ai-nine-rho.vercel.app,http://localhost:3000,http://127.0.0.1:3000,http://localhost:5173"
 
     # AI Provider (OpenAI-compatible)
     OPENAI_API_KEY: Optional[str] = None
