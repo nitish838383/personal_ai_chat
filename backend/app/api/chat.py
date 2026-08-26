@@ -139,11 +139,14 @@ async def chat(
         if not conv:
             raise HTTPException(status_code=404, detail="Conversation not found")
     else:
-        conv = Conversation(user_id=current_user.id, title=payload.message[:80])
-        db.add(conv)
-        await db.flush()
-        await db.refresh(conv)
-        conv.messages = []
+     conv = Conversation(
+        user_id=current_user.id,
+        title=payload.message[:80],
+    )
+    db.add(conv)
+    await db.flush()
+    await db.refresh(conv)
+    history = []
 
     # Store user message
     user_msg = Message(
@@ -156,12 +159,15 @@ async def chat(
     await db.flush()
 
     # Build message history for AI
-    history = [
+    if payload.conversation_id:
+        history = [
         {"role": m.role, "content": m.content}
         for m in sorted(conv.messages, key=lambda x: x.created_at)
         if m.role in ("user", "assistant", "system")
     ]
-    history.append({"role": "user", "content": payload.message})
+    else:
+        history = []
+        history.append({"role": "user", "content": payload.message})
 
     # System prompt for Personal AI OS
     system_prompt = {
